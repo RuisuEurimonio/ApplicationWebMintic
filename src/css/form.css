@@ -1,0 +1,320 @@
+/* general general general general general general general general */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Russo+One&display=swap');
+
+body{
+    padding-right: 0 !important; 
+    background-color: #CED4DA;
+    display: flex;
+    min-height: 100vh;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.title{
+    font-family: 'Russo One', sans-serif;
+    text-align: center;
+}
+
+.subtitle{
+    font-family: 'Russo One', sans-serif;
+}
+
+.text{
+    font-family: 'Montserrat', sans-serif;
+}
+
+td img{
+    max-width: 20vh;
+}
+
+.container-login{
+    min-height: 0 !important;
+  }
+  
+.container-body-total{
+    background-color: #CED4DA;
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+/* nav nav nav nav nav nav nav nav nav nav nav nav nav nav */
+
+.img_logo-nav{
+    width: 1.2rem;
+} 
+
+.container-img{
+    position: absolute;
+    right: 4rem;
+    background-color: #ADB5BD;
+    border-radius: 4rem;
+}
+
+.container-text{
+    position: absolute;
+    right: 7rem;
+}
+
+.container-logaut{
+    position: absolute;
+    right: .5rem;
+}
+
+/* Button Link Button Link Button Link Button Link Button Link Button Link Button Link Button Link  */
+
+.button-bottom{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #E9ECEF;
+    border-radius: 50%;
+    position: fixed;
+    bottom: 1.1rem;
+    right: 1rem;
+    z-index: 9;
+    width: 3rem;
+    height: 3rem;
+}
+
+#img_container-link{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    padding: .4rem;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: .7s;
+}
+
+#img_container-link:hover{
+    box-shadow: 0 0 0 1rem #000;
+    transition: 1s;;
+}
+
+#img-link{
+    margin: auto;
+    width: 60%;
+    height: 60%;
+}
+
+/* body body body body body body body body body body body body  */
+
+.container-content{
+    width: 90%;
+    margin: auto;
+    /* background-color: #6C757D;
+    border-radius: .6rem;
+    padding-bottom: 1.2rem; */
+}
+
+.content{
+    position: relative;
+    width: 93%;
+    margin: 2rem auto auto auto;
+    background-color: #495057;
+    padding: 2%;
+    border-radius: .6rem;
+}
+
+table th, table td {
+    text-align: center;
+  }
+
+.userTable, .productTable{
+    width: 95%;
+    margin: auto;
+}
+
+.button-add{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.buttons-table{
+    display: flex;
+    justify-content:space-around
+}
+
+
+
+/* model model model model model model model model model model */
+
+.modal-body{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.container-body{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.div_container-input{
+    width: 40%;
+}
+
+.formulario{
+    width: 90%;
+}
+
+.form-label{
+    display: flex;
+    flex-direction: column;
+}
+
+.center{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.invisible{
+    display: none;
+}
+
+.footer_button{
+    width:10rem;
+}
+
+.form-select{
+    width:100%;
+}
+
+/* footer */
+
+.footer{
+    width: 100%;
+}
+
+/* media   */
+
+@media only screen and (min-width: 0) and (max-width: 574px) {
+
+    /* nav nav nav nav nav nav nav nav nav nav nav nav nav nav  */
+
+    .container-text, .container-logaut, .container-img {
+        position: relative;
+        right: inherit;
+    }
+
+    .container-img{
+        padding: .2rem;
+        width: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .container_footer-modal{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .container_button-add{
+        display: flex;
+    }
+    
+    div button.button_Add{
+        width: 90%;
+    }
+}
+
+@media only screen and (min-width: 0) and (max-width: 768px){
+
+    /* modal modal modal modal modal modal modal modal modal modal  */
+
+    .container-body{
+        flex-direction: column;
+    }
+
+    div.div_container-input{
+        width: 60%;
+    }
+}
+
+@media only screen and (min-width: 575px){
+
+    /* nav nav nav nav nav nav nav nav nav nav nav nav  */
+
+    .container-img{
+        padding: 0;
+    }
+}
+
+@media only screen and (min-width: 321px) and (max-width: 500px){
+
+    /* Button Link Button Link Button Link Button Link Button Link */
+    .button-bottom{
+        width: 1.7rem;
+        height: 1.7rem;
+        bottom: 1.5rem;
+        right: .5rem;
+    }
+
+    #img-link{
+        margin: auto;
+        width: 80%;
+        height: 80%;
+    }
+}
+
+@media only screen and (min-width: 0) and (max-width:320px){
+    /* Button Link Button Link Button Link Button Link Button Link */
+    .button-bottom{
+        width: 1.7rem;
+        height: 1.7rem;
+        bottom: 1.8rem;
+        right: .5rem;
+    }
+
+    #img-link{
+        margin: auto;
+        width: 80%;
+        height: 80%;
+    } 
+}
+
+/* Order Order Order Order Order Order Order Order Order Order Order Order Order Order Order  */
+
+    /* content content content content content content content content content  */
+
+    #button-add a{
+        color: #fff;
+        text-decoration: none;
+    }
+
+/* Orders Orders Orders Orders Orders Orders Orders Orders Orders Orders  */
+    /* Modal Modal Modal Modal Modal Modal Modal Modal Modal Modal  */
+
+    .table-modal{
+        width: 95%;
+        margin: auto;
+        padding: 2rem;
+        background-color: #495057;
+    }
+
+    .table-products{
+        width: 95%;
+        margin: auto;
+    }
+    
+    .text-modal{
+        margin-top:2rem;
+    }

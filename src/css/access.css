@@ -1,0 +1,265 @@
+/* General y login General y login General y login General y login General y login General y login  */
+
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300&family=Russo+One&display=swap');
+
+body{
+    background-color: #CED4DA;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+
+}
+
+h6{
+    font-size: .6rem;
+}
+
+.mb-3{
+    max-width: 20rem;
+    margin: auto;
+}
+
+.btn{
+    border-radius: 1vw;
+}
+
+div.invisible{
+    display: none!important;
+}
+
+.valid{
+    width: 100%;
+    margin-top: 0.25rem;
+    color: #dc3545;
+}
+
+
+.title{
+    font-family: 'Russo One', sans-serif;
+    text-align: center;
+}
+
+.h5{
+    font-family: 'Russo One', sans-serif;
+}
+
+.text{
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+.form-control.is-invalid, .was-validated .form-control:invalid {
+    background-size: 1.2vw;
+}
+
+input.form-control{
+    height: 3.7vw;
+}
+
+.form-subcontainer{
+    width: 85%;
+    margin: auto;
+}
+
+
+::placeholder{
+    font-size: 1rem;
+}
+
+.login{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.card-img-top{
+    width: 35vw;
+    margin: 2vw auto auto auto;
+    border-radius: 2vw;
+    box-shadow:  0 1vw 3vw #343A40;
+    object-fit: cover;
+}
+
+div div.card{
+    width: 50%;
+    border-radius: 2vh;
+    box-shadow: 0 3vw 3vw #343A40;
+    background-color: #F8F9FA;
+}
+
+.formulario{
+    margin: -10px auto auto auto;
+    width: 80%;  
+}
+
+.button-container{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+button.btn{
+    margin: auto;
+}
+
+.register, .login-container{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.btn{
+
+    text-align: center;
+}
+
+.card-img-top{
+    width: 40vw;
+}
+
+form div.div_container-input{
+    width: 80%;
+}
+
+@media only screen and (min-width: 0px) and (max-width: 425px){
+div button.btn {
+    width: 50%;
+    }
+}
+
+@media only screen and (min-width: 0px) and (max-width: 425px){
+    .formulario{
+        width: 100%;  
+    }
+
+    .form-control.is-invalid, .was-validated .form-control:invalid {
+        background-size: 4.2vw;
+    }
+
+    input.form-control{
+        height: 7vw;
+    }
+
+    ::placeholder{
+        font-size: 1rem;
+    }
+
+    div div.card{
+        width: 80%;
+    }
+
+    .card-img-top{
+        width: 50vw;
+        box-shadow:  0 1vw 3vw #343A40;
+    }
+
+    button.btn{
+        width: 40%;
+    }
+
+    .password-container{
+        flex-direction: column;
+    }
+
+    div.password-subcontainer{
+        width: 85%;
+    }
+}
+
+@media only screen and (min-width:768px){
+    body div div.card{
+        width: 50%;
+    }
+
+    div form.formulario{
+        width: 90%;
+    }
+}
+
+@media only screen and (min-width: 900px) {
+    input.form-control{
+        height: 3.5vw;
+    }
+
+    .form-control.is-invalid, .was-validated .form-control:invalid{
+        background-size: 2vw;
+    }
+}
+
+/* Register Register Register Register Register Register Register Register  */
+
+h5.title-register{
+    margin-bottom: 2vh;
+}
+
+.password-container{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+.password-text{
+    text-align: center;
+}
+
+@media only screen and (min-width: 0px) and (max-width: 375px){ 
+    img.img-register{
+        width: 40vw;
+    }
+}
+
+@media only screen and (min-width:425px) and (max-width:500px) {
+    input.form-control{
+        height: 7vw;
+    }
+
+    ::placeholder{
+        font-size: 1rem;
+    }
+
+    form.formulario{
+        width:100%;
+    }
+
+    .password-container{
+        flex-direction: column;
+    }
+}
+
+@media only screen and (min-width:500px) and (max-width:900px) {
+    div div.card{
+        width: 75%;
+    }
+
+    .password-subcontainer{
+        width: 85%;
+        margin: auto;
+    }
+
+    input.form-control{
+        height: 4.5vw;
+    }
+
+    input.form-control.is-invalid, .was-validated .form-control:invalid {
+        background-size: 3.5vw;
+    }
+
+    form.formulario{
+        width:100%;
+    }
+
+    .password-container{
+        flex-direction: Column;
+    }
+
+}
+
+@media only screen and (max-height: 680px) {
+    .card {
+        margin: 2vh auto;
+    }
+}
