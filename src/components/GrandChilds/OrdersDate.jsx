@@ -53,8 +53,12 @@ export default class OrdersData extends react.Component{
                 this.setState({haveData: false})
             }else{
                 this.setState({haveData: true});
-
             }
+            swal.fire({
+                title: "Consultado!",
+                text: `Se ha consultado las ordenes del dia ${date}`,
+                icon: "info"
+            })
         }).catch(error => {console.log("Error "+error)})
         sessionStorage.removeItem("date")
     }

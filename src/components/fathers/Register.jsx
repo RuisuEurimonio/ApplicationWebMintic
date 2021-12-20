@@ -45,6 +45,8 @@ export default class Register extends react.Component{
             })
             setInterval(() => {swal.fire("Redireccionando. . .")}, 2500);
             setInterval(() => {document.location.pathname = "/";}, 5000);
+        }).catch(error=>{
+            console.log("Error: "+error)
         })
     }
 
@@ -80,7 +82,10 @@ export default class Register extends react.Component{
                 this.alertValidate("El correo ya esta en uso.")
                 this.setState((prevState) => ({form: {...prevState.form, email: ""}}));
             }
-        })}else{
+        }).catch(error=>{
+            console.log("Error: "+error)
+        })
+    }else{
             this.alertValidate("El correo tiene una estructura no valida.")
             this.setState((prevState)=> ({form: {...prevState.form, email: ""}}));
         }
@@ -109,7 +114,6 @@ export default class Register extends react.Component{
         let form = this.state.form;
         return(
             <div className="login align-middle ">
-
             <div className="card">
                 <div style={{textAlign: 'center'}}>
                     <img src={Img} className="card-img-top " alt="..."/>
@@ -117,7 +121,6 @@ export default class Register extends react.Component{
                 <div className="card-body">
                     <h5 className="card-title title title-register h2"> - Register - </h5>
                     <div>
-
                         <form onSubmit={this.handleSubmit} className="was-validated formulario">
                         <div className="mb-3 div_container-input">
                                 <label htmlFor="name" className="form-label subtitle fs-4">Nombre.</label>
@@ -171,12 +174,10 @@ export default class Register extends react.Component{
                                     value={form.repPassword}
                                 />
                             </div>
-                            
                             <div className="button-container">
                                 <button type="submit" className="btn btn-primary text fs-6" onClick={this.validateInputs}>Enviar.</button>
                             </div>
                         </form>
-
                     </div>
                     <hr className="separator"/>
                     <div className="login-container">
@@ -185,7 +186,6 @@ export default class Register extends react.Component{
                     </div>
                 </div>
             </div>
-
         </div>
         )
     }

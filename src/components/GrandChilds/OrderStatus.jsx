@@ -11,7 +11,7 @@ const url = "localhost";
 
 const urlBase = `http://${url}:8080/api/`;
 
-export default class OrdersAll extends react.Component{
+export default class OrdersStatus extends react.Component{
     constructor(props){
         super(props)
         this.state={
@@ -19,6 +19,7 @@ export default class OrdersAll extends react.Component{
             items:[],
             nowStatus: "",
             modalOpen: false,
+            haveData: true,
             form:{},
             registerDay: "",
             body: ""
@@ -33,7 +34,6 @@ export default class OrdersAll extends react.Component{
         }
         axios.put(urlBase+"order/update",datas).then(res=>{
             this.getOrdersStatus();
-
             swal.fire({
                 title: "Hecho!",
                 text:"La orden " +id+" ha sido actualizada",
@@ -41,6 +41,7 @@ export default class OrdersAll extends react.Component{
                 timer: "2000"
             })
             this.openModal();
+            document.location.pathname = "/Orders/zone/all";
         }).catch(err=>{console.log("Error "+err)})
     }
 
@@ -53,10 +54,12 @@ export default class OrdersAll extends react.Component{
                 this.setState({haveData: false})
             }else{
                 this.setState({haveData: true});
-
             }
+        }).catch(error=>{
+            console.log("Error: "+error)
         })
         console.log(this.state)
+        sessionStorage.removeItem("status")
     }
 
     consultOrder=(id)=>{
@@ -90,7 +93,6 @@ export default class OrdersAll extends react.Component{
 
     componentDidMount(){
         this.getOrdersStatus();
-        console.log(this.props.data)
     }
 
     render(){
@@ -99,7 +101,6 @@ export default class OrdersAll extends react.Component{
                 <div className="content">
                     <h1 className="title fs-1"> Ordenes por estatus. </h1>
                         <div id="productTable" className="productTable table-responsive">
-
                             <table border="1" className="table table-dark table-striped">
                                 {this.state.haveData ? <HaveData/> : <NotData value={"ordenes registradas."}/>}
                                     <tbody>
@@ -110,7 +111,6 @@ export default class OrdersAll extends react.Component{
                                             }else{
                                                 date = Order.registerDay.substring(0,10)
                                             }
-
                                             return(
                                                 <tr key={Order.id}>
                                                     <td>{Order.salesMan.identification} </td>
@@ -127,11 +127,8 @@ export default class OrdersAll extends react.Component{
                                         })}
                                     </tbody>
                             </table>
-
-                        
                             <Modal className="modal-dialog modal-dialog-centered modal-dialog-scrollable" style={{justifyContent: 'center', maxWidth: "95%"}} isOpen={this.state.modalOpen}>
                                 <div className="modal-content" style={{backgroundColor: "#DEE2E6"}}>
-
                                     <ModalHeader style={{display: 'block'}}>
                                         <div className="position-relative">
                                             <h2> Detalles del pedido. </h2>
@@ -140,7 +137,6 @@ export default class OrdersAll extends react.Component{
                                     </ModalHeader>
                                     <ModalBody>
                                         <form className="formulario modal-body" style={{width: '100%', backgroundColor: "#6C757D", borderRadius: ".2rem"}} onSubmit={this.handleSubmit}>                                            
-
                                         <div style={{width: '100%'}}>
                                             <div>
                                                 <h3 className="center subtitle"> Orden. </h3>
@@ -179,13 +175,11 @@ export default class OrdersAll extends react.Component{
                                                 </tbody>
                                             </table>
                                         </div>
-
                                         <div style={{width: '100%'}}>
                                             <div>
                                                 <h3 className="center subtitle"> Detalle de productos. </h3>
                                             </div>
                                             <div className="table-responsive">
-
                                                 <table border="1" className="table table-dark table-striped">
                                                     <thead>
                                                         <tr>
@@ -204,8 +198,6 @@ export default class OrdersAll extends react.Component{
                                                 </table>
                                             </div>
                                         </div>
-
-
                                             <ModalFooter style={{width: '100%'}}>
                                                 <div className="container_footer-modal">
                                                     <button className="btn btn-danger footer_button" type="button" style={{margin: ".1rem"}} onClick={()=>{this.openModal()}}>Cancelar.</button>
@@ -215,7 +207,6 @@ export default class OrdersAll extends react.Component{
                                     </ModalBody>
                                 </div>
                                 </Modal>
-
                         </div>
                 </div>
             </div>

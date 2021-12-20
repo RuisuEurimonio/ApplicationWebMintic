@@ -1,8 +1,3 @@
-
-
-
-
-// import {Link} from "react-router-dom";
 import swal from 'sweetalert2';
 import React from 'react';
 import axios from "axios";
@@ -47,10 +42,6 @@ class Login extends React.Component {
         };
     }
 
-    prueba = () => {
-        console.log(this.state.form)
-    }
-
     validateInputs = () => {
         let form = this.state.form;
         if(form.email.length === 0 || form.password.length === 0){
@@ -80,8 +71,12 @@ class Login extends React.Component {
                                 swal.fire("Ha sucedido un error")
                             }
                         }
+                    }).catch(error=>{
+                        console.log("Error: "+error)
                     })
                 }
+            }).catch(error=>{
+                console.log("Error: "+error)
             })
         }
     }
@@ -129,60 +124,54 @@ class Login extends React.Component {
         this.clearSession();
         let form = this.state.form;
         return (
-
             <div className="login">
-
-            <div className="card">
-                <img src={Img} className="card-img-top" alt="..." />
-                <div className="card-body">
-                    <h1 className="card-title title"> - Login - </h1>
-                    <div>
-
-                        <form className="was-validated formulario" onSubmit={this.handleSubmit}>
-                            <div className="mb-3 div_container-input">
-                                <label htmlFor="email" className="form-label subtitle fs-4">Email.</label>
-                                <input
-                                    required 
-                                    className="form-control" 
-                                    type="email" 
-                                    name="email" 
-                                    id="email"
-                                    placheholder="Ej: Alfredo"
-                                    onChange={this.handleChange} 
-                                    value={form.email}
-                                />
+                <div className="card">
+                    <img src={Img} className="card-img-top" alt="..." />
+                    <div className="card-body">
+                        <h1 className="card-title title"> - Login - </h1>
+                        <div>
+                            <form className="was-validated formulario" onSubmit={this.handleSubmit}>
+                                <div className="mb-3 div_container-input">
+                                    <label htmlFor="email" className="form-label subtitle fs-4">Email.</label>
+                                    <input
+                                        required 
+                                        className="form-control" 
+                                        type="email" 
+                                        name="email" 
+                                        id="email"
+                                        placheholder="Ej: Alfredo"
+                                        onChange={this.handleChange} 
+                                        value={form.email}
+                                    />
+                                </div>
+                                 <div className="mb-3 div_container-input">
+                                    <label htmlFor="password" className="form-label subtitle fs-4">Password.</label>
+                                    <input
+                                        required 
+                                        className="form-control" 
+                                        type="password" 
+                                        name="password" 
+                                        id="password"
+                                        placheholder="Ej: Alfredo"
+                                        onChange={this.handleChange} 
+                                        value={form.password}
+                                    />
+                                </div>
+                                <div className="button-container">
+                                    <button type="submit" className="btn btn-primary text" onClick={()=>this.validateInputs()}>Enter</button>
+                                </div>
+                            </form>
+                        </div>
+                        <hr className="separator"/>
+                        <div className="register">
+                            <p className="text"> ¿No tienes una cuenta? </p>
+                            <div >
+                                <a href="register" className="btn btn-primary text"> Crear cuenta.</a>
                             </div>
-                             <div className="mb-3 div_container-input">
-                                <label htmlFor="password" className="form-label subtitle fs-4">Password.</label>
-                                <input
-                                    required 
-                                    className="form-control" 
-                                    type="password" 
-                                    name="password" 
-                                    id="password"
-                                    placheholder="Ej: Alfredo"
-                                    onChange={this.handleChange} 
-                                    value={form.password}
-                                />
-                            </div>
-                            <div className="button-container">
-                                <button type="submit" className="btn btn-primary text" onClick={()=>this.validateInputs()}>Enter</button>
-                            </div>
-                        </form>
-
-                    </div>
-                    <hr className="separator"/>
-                    <div className="register">
-                        <p className="text"> ¿No tienes una cuenta? </p>
-                        <div >
-                            <a href="register" className="btn btn-primary text"> Crear cuenta.</a>
                         </div>
                     </div>
                 </div>
             </div>
-
-        </div>
-
         )
     }
 }

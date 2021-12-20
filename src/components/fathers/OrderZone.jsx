@@ -17,8 +17,8 @@ export default class OrderZone extends react.Component{
             dateBoolean: false,
             statusBoolean: false,
             inputs:{
+                date: "",
                 status: "",
-                date: ""
             }
         }
     }
@@ -47,6 +47,7 @@ export default class OrderZone extends react.Component{
     }
 
     searchStatus=()=>{
+        console.log(this.state)
         if(this.state.inputs.status.length === 0){
             swal.fire({
                 title:"Ups!!!",
@@ -113,20 +114,15 @@ export default class OrderZone extends react.Component{
     render(){
         return(
             <div className="container-body-total">   
-
             <Nav />
             <Profile />
             <br/>
-
             <div className="container-content">
                     <div className="content">
                         <h1 className="title fs-1"> Opciones de consulta. </h1>
-                            <div id="productTable" className="productTable table-responsive">
-
-                               
-                            </div>
+                            <div id="productTable" className="productTable table-responsive"></div>
                             <div id="button_add-container" style={{justifyContent: 'center'}}>
-                                <div className="container_button-add" style={{display: 'flex', alignItems: "center", justifyContent: "center"}}>
+                                <div className="container_button-add" style={{display: 'flex', alignItems: "center", justifyContent: "center",  flexWrap: "wrap"}}>
                                     <button className="btn btn-primary text button_Add" type="button" style={{margin: ".1rem"}} onClick={()=>{this.allIsClicked()}}>Todas las ordenes.</button>
                                     <button className="btn btn-primary text button_Add" type="button" style={{margin: ".1rem"}} onClick={()=>{this.iIsClicked()}}>Mis ordenes.</button>
                                     <button className="btn btn-primary text button_Add" type="button" style={{margin: ".1rem"}} onClick={()=>{this.dateIsClicked()}}>Por fecha.</button>
@@ -168,10 +164,8 @@ export default class OrderZone extends react.Component{
                     </div>
                 </div>
                 <br/>
-
-            <Outlet data={this.state.inputs} />
+            <Outlet />
             <Footer/>
-
             </div>
         )
     }

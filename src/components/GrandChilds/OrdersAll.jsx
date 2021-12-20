@@ -52,8 +52,14 @@ export default class OrdersAll extends react.Component{
                 this.setState({haveData: false})
             }else{
                 this.setState({haveData: true});
-
             }
+            swal.fire({
+                title: "Consultado!",
+                text: `Se han consultado las ordenes de la zona ${zone}`,
+                icon: "info"
+            })
+        }).catch(error=>{
+            console.log("Error: "+error)
         })
         console.log(this.state)
     }

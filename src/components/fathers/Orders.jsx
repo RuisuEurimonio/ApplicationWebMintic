@@ -188,7 +188,6 @@ export default class Orders extends react.Component{
         }
     }
 
-
     makeBody=()=>{
         let type = sessionStorage.getItem("type");
         if(type === "Administrador" || type === "Asesor comercial"){
@@ -264,8 +263,7 @@ export default class Orders extends react.Component{
                 icon: "error",
                 timer: "2000"
             })
-        }
-        
+        }      
     }
 
     alertValidate=(text)=>{
@@ -311,12 +309,10 @@ export default class Orders extends react.Component{
             <div className="container-body-total">
                 <Arrow />            
                 <Nav value={"order"}/>
-
                 <div className="container-content">
                     <div className="content">
                         <h1 className="title fs-1"> Carrito. </h1>
                             <div id="productTable" className="productTable table-responsive">
-
                                 <table border="1" className="table table-dark table-striped">
                                     {this.state.haveData ? <HaveData/> : <NotData value={"productos registrados."}/>}
                                         <tbody>
@@ -354,9 +350,7 @@ export default class Orders extends react.Component{
                             </div>
                     </div>
                 </div>
-
                 <Footer/>
-
             </div>
         )
     }

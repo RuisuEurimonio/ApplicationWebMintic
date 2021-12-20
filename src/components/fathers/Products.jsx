@@ -1,34 +1,10 @@
-
-
-
-
-
-import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap';
 import swal from 'sweetalert2'
 import react from 'react';
 import Arrow from '../childrens/Arrow';
 import Nav from '../childrens/Nav';
 import Footer from '../childrens/Footer';
-import HaveDataProduct from '../childrens/HeaderTtitleDataProduct';
-import NotData from '../childrens/HeaderTitleNotData';
-import axios from 'axios';
-
-const url = "localhost";
-//150.136.51.44
-
-const urlBase = `http://${url}:8080/api/`;
-
-const Toast = swal.mixin({
-    toast: true,
-    position: "top-end",
-    showConfirmButton: false,
-    timer: 6000,
-    timerProgressBar: true,
-    didOpen: (toast) => {
-        toast.addEventListener('mouseenter', swal.stopTimer)
-        toast.addEventListener('mouseleave', swal.resumeTimer)
-      }
-})
+import Profile from '../childrens/Profile'
+import { Outlet } from 'react-router-dom'
 
 export default class Product extends react.Component{
     constructor(props){
@@ -37,217 +13,144 @@ export default class Product extends react.Component{
             items: [],
             data: [],
             text: '',
-            nullForm: false,
-            haveData: false,
-            modalOpen: false,
-            updateModal: false,
-            modalAlert: false,
-            emailExist: false,
-            form:{
-                "reference": "",
-                "brand": "",
-                "category": "",
-                "description": "",
-                "price": "",
-                "availability": "",
-                "quantity": "",
-                "photography": ""
-            }
-        }
-    }
-
-    getProducts = () =>{
-        axios.get(urlBase+"peripherals/all").then(response=>{
-            this.setState({data: response.data});
-            if(response.data.length === 0){
-                this.setState({haveData: false});
-            } else{
-                this.setState({haveData: true});
-            }
-        }).catch(error=>{
-            console.log("Error: "+error)
-        })
-    }
-
-    postProduct=async()=>{
-        await axios.post(urlBase+"peripherals/new", this.state.form).then(response=>{
-            this.modalOpen();
-            this.getProducts();
-            this.cleanProduct();
-            this.goodRequest();
-            this.setState({nullForm: false});
-            console.log(response.data);
-        }).catch(error=>{
-            console.log("Error: "+error)
-        })
-    }
-
-    putProduct=()=>{
-        axios.put(urlBase+"peripherals/update", this.state.form).then(response=>{
-            this.modalOpen();
-            this.getProducts();
-            this.cleanProduct();
-            this.goodRequest();
-        }).catch(error=>{
-            console.log("Error: "+error)
-        })
-    }
-
-    deleteProduct=()=>{
-        console.log(this.state)
-        axios.delete(urlBase+"peripherals/"+this.state.form.reference).then(res =>{
-            this.setState({modalAlert: false});
-            this.getProducts();
-            this.cleanProduct();
-        }).catch(error=>{
-            console.log("Error: "+error)
-        })
-    }
-
-    validateInputs=()=>{
-        let form = this.state.form;
-        if(form.reference.length === 0 || form.brand.length === 0 
-            || form.category.length === 0 || form.description.length === 0 
-            || form.price.length === 0 || form.availability.length === 0 
-            || form.quantity.length === 0 || form.photography.length ===0){
-            this.alertValidate("Hay campos vacios")
-        }else if(form.reference.length < 3){
-            this.alertValidate("La referencia es muy corta, min 3 caracteres");
-            this.setState((prevState) => ({form: {...prevState.form,reference: ""}}));
-        }else if(form.brand.length < 3){
-            this.alertValidate("El modelo es muy corto, min 3 caracteres");
-            this.setState((prevState) => ({form: {...prevState.form,brand: ""}}));
-        }else if(form.category.length < 4){
-            this.alertValidate("La categoria es muy corta, min 4 caracteres");
-            this.setState((prevState) => ({form: {...prevState.form,category: ""}}));
-        }else if(form.description.length < 4 || form.description.length > 80){
-            this.alertValidate("la descripción debe tener minimo 5 caracteres y maximo 80");
-            this.setState((prevState) => ({form: {...prevState.form,category: ""}}));
-        }else if(form.price < 1){
-            this.alertValidate("No se acceptan precios negativos!");
-            this.setState((prevState) => ({form: {...prevState.form,price: ""}}));
-        }else if(form.quantity < 1){
-            this.alertValidate("No se acceptan cantidades negativos!");
-            this.setState((prevState) => ({form: {...prevState.form,quantity: ""}}));
-        }else {
-            if(this.state.updateModal){
-                this.putProduct();
-            }else{
-                this.postProduct();
-            }
-        }
-    }
-
-    alertValidate=(text)=>{
-            Toast.fire({icon: "error", text: text});
-    }
-
-    goodRequest = () =>{
-        swal.fire({
-            title: "Confirmado.",
-            text: "Datos cargados!",
-            timer: "2000"
-        })
-    }
-
-    productSelected=(product)=>{
-        this.setState({
-            updateModal: true,
-            form:{
-                reference: product.reference,
-                brand: product.brand,
-                category: product.category,
-                description: product.description,
-                price: product.price,
-                availability: product.availability,
-                quantity: product.quantity,
-                photography: product.photography,
-        }
-        })
-    }
-
-    acceptDelete=(reference)=>{
-        let type = sessionStorage.getItem("type");
-        if(type === "Administrador" || type === "Coordinador de zona" || type === "Asesor comercial"){
-            swal.fire({
-                title: "Eliminar producto",
-                text: "¿Esta seguro de eliminar el producto " + reference+"?",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: 'Eliminar',
-                cancelButtonText: 'cancelar!',
-            }).then(respuesta=>{
-                if(respuesta.isConfirmed){
-                    this.deleteProduct();
-                    swal.fire({
-                        title: "Usuario eliminado!",
-                        text: reference+" ha sido eliminado.",
-                        icon: "success",
-                        timer: "2000"
-                    })
-                }else{
-                    swal.fire({
-                        title: "Cancelado!",
-                        text: reference+" no se ha eliminado.",
-                        icon: "info",
-                        timer: "2000"
-                    })
-                }
-            })
-        }else{
-            swal.fire({
-                title: "Lo sentimos",
-                text: "No tienes los permisos suficientes (Admin/Coord/Ase)",
-                icon: "error",
-                timer: "2000"
-            })
-        }
-    }
-
-    cleanProduct=()=>{
-        this.setState({
-            form:{
-                reference: "",
-                brand: "",
-                category: "",
-                description: "",
+            price: "",
+            word: "",
+            wordBoolean: false,
+            referenceBoolean: false,
+            priceBoolean: false,
+            categoryBoolean: false,
+            inputs:{
                 price: "",
-                availability: "",
-                quantity: "",
-                photography: "",
+                word: "",
+                reference: "",
+                category: "",
             }
-        }) 
-    }
-
-    modalOpen=()=>{
-        let type = sessionStorage.getItem("type");
-        console.log(type !== "Coordinador de zona")
-        console.log(type !== "Administrador")
-        if(type === "Administrador" || type === "Coordinador de zona" || type === "Asesor comercial"){
-            this.setState({modalOpen: !this.state.modalOpen})
-        }else{
-            swal.fire({
-                title: "Lo sentimos",
-                text: "No tienes los permisos suficientes (Admin/Coord/Ase)",
-                icon: "error",
-                timer: "2000"
-            })
         }
     }
 
-    handleSubmit=(e)=>{
-        e.preventDefault()
+    searchWord=()=>{
+        if(this.state.inputs.word.length === 0){
+            swal.fire({
+                title:"Ups!!!",
+                text:"Se te olvido ingresar los datos, vuelve a intentarlo.",
+                icon:"info",
+                timer:"2000"
+            })
+        }else{
+            sessionStorage.setItem("word", this.state.inputs.word)
+            document.location.pathname = "Products/description";
+        }
+    }
+
+    searchReference=()=>{
+        if(this.state.inputs.reference.length === 0){
+            swal.fire({
+                title:"Ups!!!",
+                text:"Se te olvido ingresar los datos, vuelve a intentarlo.",
+                icon:"info",
+                timer:"2000"
+            })
+        }else{
+            sessionStorage.setItem("reference", this.state.inputs.reference)
+            document.location.pathname = "Products/reference";
+        }
+    }
+
+    searchPrice=()=>{
+        if(this.state.inputs.price.length === 0){
+            swal.fire({
+                title:"Ups!!!",
+                text:"Se te olvido ingresar los datos, vuelve a intentarlo.",
+                icon:"info",
+                timer:"2000"
+            })
+        }else if(this.state.inputs.price < 0){
+            swal.fire({
+                title:"Ups!!!",
+                text:"El valor no puede ser negativo",
+                icon:"info",
+                timer:"2000"
+            })
+        }else{
+            sessionStorage.setItem("price", this.state.inputs.price)
+            document.location.pathname = "Products/price";
+        }
+    }
+
+    searchCategory=()=>{
+        console.log(this.state)
+        if(this.state.inputs.category.length === 0){
+            swal.fire({
+                title:"Ups!!!",
+                text:"El valor no puede ser negativo",
+                icon:"info",
+                timer:"2000"
+            })
+        }else{
+            sessionStorage.setItem("category", this.state.inputs.category);
+            document.location.pathname = "Products/category";
+        }
+    }
+
+    priceIsClicked=()=>{
+        this.setState({priceBoolean: !this.state.priceBoolean});
+        this.setState({wordBoolean: false,})
+        this.setState({referenceBoolean: false,})
+        this.setState({categoryBoolean: false,})
+        this.cleanInput();
+    }
+
+    allIsClicked=()=>{
+        this.setState({priceBoolean: false,wordBoolean: false,categoryBoolean: false})
+        document.location.pathname = "/Products/all"
+        this.cleanInput();
+    }
+
+    wordIsClicked=()=>{
+        this.setState({wordBoolean: !this.state.wordBoolean});
+        this.setState({priceBoolean: false})
+        this.setState({referenceBoolean: false,})
+        this.setState({categoryBoolean: false,})
+        this.cleanInput();
+    }
+
+    referenceIsClicked=()=>{
+        this.setState({referenceBoolean: !this.state.referenceBoolean});
+        this.setState({priceBoolean: false})
+        this.setState({wordBoolean: false})
+        this.setState({categoryBoolean: false})
+        this.cleanInput();
+    }
+
+    categoryIsClicked=()=>{
+        this.setState({categoryBoolean: !this.state.categoryBoolean});
+        this.setState({priceBoolean: false})
+        this.setState({wordBoolean: false,})
+        this.setState({referenceBoolean: false,})
+        this.cleanInput();
+    }
+
+    cleanInput=()=>{
+        this.setState({
+            inputs:{
+                price: "",
+                reference: "",
+                word: "",
+                category: "",
+            }
+        })
     }
 
     handleChange=(event)=>{
-        let {name, value} = event.target
+        let button = event.target.name;
+        let value = event.target.value;
         this.setState((prevState)=>({
-            form: {
-                ...prevState.form,
-                [name]: value
-            }
+            inputs: {
+                ...prevState.inputs,
+                [button]: value
+            }   
         }))
-        console.log(this.state.form)
+        console.log(this.state)
     }
 
     componentDidMount(){
@@ -266,187 +169,101 @@ export default class Product extends react.Component{
                 }
             })
         }
-        this.getProducts();
+        console.log(this.state)
     }
 
     render(){
-        let form = this.state.form;
-        let input = "mb-3 div_container-input"
-        if (this.state.updateModal){
-            input = "mb-3 div_container-input invisible"
-        }
         return(
             <div className="container-body-total">
-
-                <Arrow />
-
                 <Nav value={"product"}/>
-
+                <Arrow />
+                <Profile />
                 <div className="container-content">
                     <div className="content">
-                        <h1 className="title fs-1"> Productos. </h1>
-                            <div id="productTable" className="productTable table-responsive">
-
-                                <table border="1" className="table table-dark table-striped">
-                                    {this.state.haveData ? <HaveDataProduct/> : <NotData value={"productos registrados."}/>}
-                                    <tbody>
-                                        {this.state.data.map(product=>{
-                                            let availability = product.availability;
-                                            if(availability === true){
-                                                availability = "Si";
-                                            } else if(availability === false) {
-                                                availability = "No";
-                                            }
-                                            return(
-                                                <tr key={product.reference}>
-                                                    <td> <img src={product.photography} alt={product.reference} /></td>
-                                                    <td>{product.reference}</td>
-                                                    <td>{product.brand}</td>
-                                                    <td>{product.category}</td>
-                                                    <td>{product.description}</td>
-                                                    <td>{product.price}</td>
-                                                    <td>{availability}</td>
-                                                    <td>{product.quantity}</td>
-                                                    <td>
-                                                        <div className="buttons-table">
-                                                            <button className="btn btn-danger text" type="button" onClick={()=>{this.productSelected(product); this.acceptDelete(product.reference,)}}> Eliminar </button> 
-                                                            <button className="btn btn-primary text" type="button" onClick={()=>{this.productSelected(product); this.modalOpen(); this.setState({nullForm: true})}}> Actualizar </button>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })}
-                                    </tbody>
-                                </table>
-
-                                <Modal className="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-lg" isOpen={this.state.modalOpen}>
-                                    <ModalHeader style={{display: 'block'}}>
-                                        <div>
-                                            <h2> Guardar Producto. </h2>
-                                        </div>
-                                    </ModalHeader>
-                                    <ModalBody>
-                                        <form className="was-validated formulario modal-body" style={{width: '100%'}} onSubmit={this.handleSubmit}>
-                                            <div className={input}>
-                                                <label htmlFor="reference" className="form-label subtitle fs-4">Referencia.</label>
-                                                <input 
-                                                    required
-                                                    className="form-control" 
-                                                    type="text" 
-                                                    name="reference" 
-                                                    id="reference" 
-                                                    onChange={this.handleChange} 
-                                                    value={form.reference}
-                                                />
-                                            </div>
-                                            <div className="mb-3 div_container-input">
-                                                <label htmlFor="brand" className="form-label subtitle fs-4">Modelo.</label>
-                                                <input
-                                                    required 
-                                                    className="form-control" 
-                                                    type="text" 
-                                                    name="brand" 
-                                                    id="brand"
-                                                    onChange={this.handleChange} 
-                                                    value={form.brand}
-                                                />
-                                            </div>
-                                            <div className="mb-3 div_container-input">
-                                                <label htmlFor="category" className="form-label subtitle fs-4">Categoria.</label>
-                                                <input
-                                                    required 
-                                                    className="form-control" 
-                                                    type="text" 
-                                                    name="category" 
-                                                    id="category"
-                                                    onChange={this.handleChange} 
-                                                    value={form.category}
-                                                />
-                                            </div>
-                                            <div className="mb-3 div_container-input">
-                                                <label htmlFor="description" className="form-label subtitle fs-4">Descripción</label>
-                                                <input
-                                                    required 
-                                                    className="form-control" 
-                                                    type="text" 
-                                                    name="description" 
-                                                    id="description" 
-                                                    onChange={this.handleChange} 
-                                                    value={form.description}
-                                                />
-                                            </div>
-                                            <div className="mb-3 div_container-input">
-                                                <label htmlFor="price" className="form-label subtitle fs-4">Precio.</label>
-                                                <input
-                                                    required 
-                                                    className="form-control" 
-                                                    type="number" 
-                                                    name="price" 
-                                                    id="price" 
-                                                    onChange={this.handleChange} 
-                                                    value={form.price}
-                                                />
-                                            </div>
-                                            <div className="mb-3 div_container-input center">
-                                                <div className="selected" style={{width: "100%"}}>
-                                                    <label htmlFor="availability" className="form-label subtitle fs-4">Disponibilidad:</label>
-                                                    <select className="form-select" id="availability" name="availability" required onChange={this.handleChange} defaultValue={ form.availability}>
-                                                        <option disabled="disabled" value={""}>Selecciona la disponibilidad.</option>
-                                                        <option value="true">Si.</option>
-                                                        <option value="false">No.</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div className="mb-3 div_container-input">
-                                                <label htmlFor="quantity" className="form-label subtitle fs-4">Cantidad.</label>
-                                                <input
-                                                    required 
-                                                    className="form-control" 
-                                                    type="number" 
-                                                    name="quantity" 
-                                                    id="quantity" 
-                                                    onChange={this.handleChange} 
-                                                    value={form.quantity}
-                                                />
-                                            </div>
-                                            <div className="mb-3 div_container-input">
-                                                <label htmlFor="photography" className="form-label subtitle fs-4">Foto.</label>
-                                                <input
-                                                    required 
-                                                    className="form-control" 
-                                                    type="url" 
-                                                    name="photography" 
-                                                    id="photography" 
-                                                    onChange={this.handleChange} 
-                                                    value={form.photography}
-                                                />
-                                            </div>
-                                            <ModalFooter style={{width: '100%',justifyContent: 'center'}}>
-                                                <div className="container_footer-modal">
-                                                    {this.state.updateModal ?
-                                                        <button className="btn btn-primary footer_button" type="submit" onClick={()=>this.validateInputs()}>Actualizar.</button> :
-                                                        <button className="btn btn-primary footer_button" type="submit" onClick={()=>this.validateInputs()}>Agregar.</button> 
-                                                    }
-                                                    {"   "}
-                                                    <button className="btn btn-danger footer_button" type="button" style={{margin: ".1rem"}} onClick={()=>{this.modalOpen(); this.setState({nullForm: false}); this.cleanProduct()}}>Cancelar.</button>
-                                                </div>
-                                            </ModalFooter>
-                                        </form>
-                                    </ModalBody>
-                                </Modal>
-
+                        <h1 className="title fs-1"> Opciones de consulta. </h1>
+                            <div id="productTable" className="productTable table-responsive">  
                             </div>
-                            <div className="button-add" id="button_add-container">
-                                <div className="container_button-add">
-                                    <button className="btn btn-primary text button_Add" type="button" onClick={()=>{this.setState({nullForm: true}); this.setState({updateModal: false}); this.modalOpen()}}>Agregar productos.</button>
+                            <div id="button_add-container" style={{justifyContent: 'center'}}>
+                                <div className="container_button-add" style={{display: 'flex', alignItems: "center", justifyContent: "center", flexWrap: "wrap"}}>
+                                    <button className="btn btn-primary text button_Add" type="button" style={{margin: ".1rem"}} onClick={()=>{this.allIsClicked()}}>Todas los productos.</button>
+                                    <button className="btn btn-primary text button_Add" type="button" style={{margin: ".1rem"}} onClick={()=>{this.priceIsClicked()}}>Por precio.</button>
+                                    <button className="btn btn-primary text button_Add" type="button" style={{margin: ".1rem"}} onClick={()=>{this.wordIsClicked()}}>Por palabra.</button>
+                                    <button className="btn btn-primary text button_Add" type="button" style={{margin: ".1rem"}} onClick={()=>{this.referenceIsClicked()}}>Por nombre.</button>
+                                    <button className="btn btn-primary text button_Add" type="button" style={{margin: ".1rem"}} onClick={()=>{this.categoryIsClicked()}}>Por categoria.</button>
                                 </div>
+                               {this.state.priceBoolean && (
+                                    <div style={{display: 'flex', width: "70%", margin: "auto", alignItems: "flex-end"}}>
+                                        <div style={{width: "80%", margin: "auto"}}>
+                                                <label htmlFor="price" className="form-label subtitle fs-4">Precio.</label>
+                                                    <input
+                                                        required 
+                                                        className="form-control" 
+                                                        type="number" 
+                                                        name="price" 
+                                                        id="price"
+                                                        onChange={this.handleChange} 
+                                                        value={this.state.inputs.price}
+                                                    />
+                                        </div>
+                                        <button className="btn btn-primary text button_Add btn-sm" type="button" style={{margin: ".1rem", height: "fit-content", padding: ".7rem"}} onClick={()=>{this.searchPrice()}}>Buscar.</button>
+                                    </div>
+                                )}
+                                {this.state.wordBoolean && (
+                                    <div style={{display: 'flex', width: "70%", margin: "auto", alignItems: "flex-end"}}>
+                                        <div style={{width: "80%", margin: "auto"}}>
+                                                <label htmlFor="word" className="form-label subtitle fs-4">Palabra.</label>
+                                                    <input
+                                                        required 
+                                                        className="form-control" 
+                                                        type="text" 
+                                                        name="word" 
+                                                        id="word"
+                                                        onChange={this.handleChange} 
+                                                        value={this.state.inputs.word}
+                                                    />
+                                        </div>
+                                        <button className="btn btn-primary text button_Add btn-sm" type="button" style={{margin: ".1rem", height: "fit-content", padding: ".7rem"}} onClick={()=>{this.searchWord()}}>Buscar.</button>
+                                    </div>
+                                )}
+                                {this.state.referenceBoolean && (
+                                    <div style={{display: 'flex', width: "70%", margin: "auto", alignItems: "flex-end"}}>
+                                        <div style={{width: "80%", margin: "auto"}}>
+                                                <label htmlFor="reference" className="form-label subtitle fs-4">Referencia.</label>
+                                                    <input
+                                                        required 
+                                                        className="form-control" 
+                                                        type="text" 
+                                                        name="reference" 
+                                                        id="reference"
+                                                        onChange={this.handleChange} 
+                                                        value={this.state.inputs.reference}
+                                                    />
+                                        </div>
+                                        <button className="btn btn-primary text button_Add btn-sm" type="button" style={{margin: ".1rem", height: "fit-content", padding: ".7rem"}} onClick={()=>{this.searchReference()}}>Buscar.</button>
+                                    </div>
+                                )}
+                                {this.state.categoryBoolean && (
+                                    <div style={{display: 'flex', width: "70%", margin: "auto", alignItems: "flex-end"}}>
+                                        <div style={{width: "80%", margin: "auto"}}>
+                                                <label htmlFor="category" className="form-label subtitle fs-4">Categoria.</label>
+                                                    <input
+                                                        required 
+                                                        className="form-control" 
+                                                        type="text" 
+                                                        name="category" 
+                                                        id="category"
+                                                        onChange={this.handleChange} 
+                                                        value={this.state.inputs.category}
+                                                    />
+                                        </div>
+                                        <button className="btn btn-primary text button_Add btn-sm" type="button" style={{margin: ".1rem", height: "fit-content", padding: ".7rem"}} onClick={()=>{this.searchCategory()}}>Buscar.</button>
+                                    </div>
+                                )}
                             </div>
-                        </div>
-
-                </div>      
-
+                    </div>
+                </div>
+                <Outlet/>
                 <Footer/>
-
             </div>
         )
     }

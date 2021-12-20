@@ -1,7 +1,3 @@
-
-
-
-
 import React from 'react';
 import Img from '../../sources/logopng.png'
 import Nav from "../childrens/Nav"
@@ -39,18 +35,13 @@ class Home extends React.Component {
     }
 
     render(){
-        
         return (
             <div className="container-all">
-
                 <div className="p-5 text-white text-center welcome">
                     <h1 className="title fs-1"> Bienvenido a Contra corriente LTDA. </h1>
                 </div>
-
                 <Nav value={"home"}/>
-                    
                 <Profile />
-
                     <div className="container mt-5">
                         <div className="row">
                         <div className="col-sm-4 info">
@@ -67,7 +58,6 @@ class Home extends React.Component {
                             <h2 className="subtitle fs-2">Contra corriente LDTA.</h2>
                             <h5 className="text fs-3">Empresa Barranquillera, Enero, 2009.</h5>
                             <p className="text fs-4">Contra Corriente LTDA. es una empresa con más de 10 años de trayectoria en la distribución de periféricos mediante el servicio de venta directa por catálogo, se ubica en el CENTRO HISTÓRICO de la ciudad, actualmente cuenta con más de 50 empleados entre directos y fuerza de ventas independiente.</p>
-                    
                             <h2 className="mt-5 subtitle fs-2">Misión:</h2>
                             <p className="text fs-4">Nuetra misión durante estos diez años con lugar en el mercado es hacernos diferencia de otras empresas, brindando productos de alta calidad garantizando lo mejor para nuestros clientes.</p>
                             <h2 className="mt-5 subtitle fs-2">Visión:</h2>
@@ -75,9 +65,7 @@ class Home extends React.Component {
                         </div>
                         </div>
                     </div>
-                    
-                    <Footer />
-
+                <Footer />
             </div>
         )
     }

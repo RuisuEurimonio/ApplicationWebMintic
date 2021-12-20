@@ -33,7 +33,6 @@ export default class OrdersSalesMan extends react.Component{
         }
         axios.put(urlBase+"order/update",datas).then(res=>{
             this.getOrdersZone();
-
             swal.fire({
                 title: "Hecho!",
                 text:"La orden " +id+" ha sido actualizada",
@@ -52,8 +51,14 @@ export default class OrdersSalesMan extends react.Component{
                 this.setState({haveData: false})
             }else{
                 this.setState({haveData: true});
-
             }
+            swal.fire({
+                title: "Consultado!",
+                text: `Se ha consultado las ordenes del usuario con el id: ${id}`,
+                icon: "info"
+            })
+        }).catch(error=>{
+            console.log("Error: "+error)
         })
         console.log(this.state)
     }
@@ -95,9 +100,8 @@ export default class OrdersSalesMan extends react.Component{
         return(
             <div className="container-content">
                 <div className="content">
-                    <h1 className="title fs-1"> Ordenes de asesores comerciales. </h1>
+                    <h1 className="title fs-1"> Mis ordenes comerciales. </h1>
                         <div id="productTable" className="productTable table-responsive">
-
                             <table border="1" className="table table-dark table-striped">
                                 {this.state.haveData ? <HaveData/> : <NotData value={"ordenes registradas."}/>}
                                     <tbody>
@@ -108,7 +112,6 @@ export default class OrdersSalesMan extends react.Component{
                                             }else{
                                                 date = Order.registerDay.substring(0,10)
                                             }
-
                                             return(
                                                 <tr key={Order.id}>
                                                     <td>{Order.salesMan.identification} </td>
@@ -125,8 +128,6 @@ export default class OrdersSalesMan extends react.Component{
                                         })}
                                     </tbody>
                             </table>
-
-                        
                             <Modal className="modal-dialog modal-dialog-centered modal-dialog-scrollable" style={{justifyContent: 'center', maxWidth: "95%"}} isOpen={this.state.modalOpen}>
                                 <div className="modal-content" style={{backgroundColor: "#DEE2E6"}}>
 
@@ -138,7 +139,6 @@ export default class OrdersSalesMan extends react.Component{
                                     </ModalHeader>
                                     <ModalBody>
                                         <form className="formulario modal-body" style={{width: '100%', backgroundColor: "#6C757D", borderRadius: ".2rem"}} onSubmit={this.handleSubmit}>                                            
-
                                         <div style={{width: '100%'}}>
                                             <div>
                                                 <h3 className="center subtitle"> Orden. </h3>
@@ -177,13 +177,11 @@ export default class OrdersSalesMan extends react.Component{
                                                 </tbody>
                                             </table>
                                         </div>
-
                                         <div style={{width: '100%'}}>
                                             <div>
                                                 <h3 className="center subtitle"> Detalle de productos. </h3>
                                             </div>
                                             <div className="table-responsive">
-
                                                 <table border="1" className="table table-dark table-striped">
                                                     <thead>
                                                         <tr>
@@ -198,12 +196,10 @@ export default class OrdersSalesMan extends react.Component{
                                                             <th> Pedido. </th>
                                                         </tr>    
                                                     </thead>
-                                                            <ProductsTable data={this.state.form} />
+                                                        <ProductsTable data={this.state.form} />
                                                 </table>
                                             </div>
                                         </div>
-
-
                                             <ModalFooter style={{width: '100%'}}>
                                                 <div className="container_footer-modal">
                                                     <button className="btn btn-danger footer_button" type="button" style={{margin: ".1rem"}} onClick={()=>{this.openModal()}}>Cancelar.</button>
@@ -213,7 +209,6 @@ export default class OrdersSalesMan extends react.Component{
                                     </ModalBody>
                                 </div>
                                 </Modal>
-
                         </div>
                 </div>
             </div>

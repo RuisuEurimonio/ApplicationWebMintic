@@ -33,39 +33,36 @@ class Nav extends React.Component {
     }
     
     render(){
-
         return (
-
-        <nav className="navbar navbar-expand-sm bg-dark navbar-dark container-nav">
-            <div className="container-fluid">
-            <ul className="navbar-nav">
-                <li className="nav-item">
-                    <NavLink to="/Home" className={this.state.home}> Home. </NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink to="/User" className={this.state.user}> Users. </NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink to="/Products" className={this.state.products}> Products. </NavLink>
-                </li>
-                <li className="nav-item">
-                    <NavLink to="/Orders" className={this.state.order}> Orders. </NavLink>
-                </li>
-                <li className="nav-item container-text">
-                <NavLink to="/Home" className="nav-link subtitle"> Contra Corriente LTDA. </NavLink>
-                </li>
-                <li className="nav-item container-img">
-                    <NavLink to="/Home" className="nav-link">
-                        <img className="img_logo-nav" src={Img} alt="logo peripherals" title="logo peripherals" />
-                    </NavLink>
-                </li>
-                <li className="nav-item container-logaut">
-                    <NavLink to="/" className="nav-link subtitle"> Salir. </NavLink>
-                </li>
-            </ul>
-            </div>
-        </nav>
-
+            <nav className="navbar navbar-expand-sm bg-dark navbar-dark container-nav">
+                <div className="container-fluid">
+                <ul className="navbar-nav">
+                    <li className="nav-item">
+                        <NavLink to="/Home" className={this.state.home}> Home. </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink to="/User/all" className={this.state.user}> Users. </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink to="/Products/all" className={this.state.products}> Products. </NavLink>
+                    </li>
+                    <li className="nav-item">
+                        <NavLink to="/Orders" className={this.state.order}> Orders. </NavLink>
+                    </li>
+                    <li className="nav-item container-text">
+                    <NavLink to="/Home" className="nav-link subtitle"> Contra Corriente LTDA. </NavLink>
+                    </li>
+                    <li className="nav-item container-img">
+                        <NavLink to="/Home" className="nav-link">
+                            <img className="img_logo-nav" src={Img} alt="logo peripherals" title="logo peripherals" />
+                        </NavLink>
+                    </li>
+                    <li className="nav-item container-logaut">
+                        <NavLink to="/" className="nav-link subtitle"> Salir. </NavLink>
+                    </li>
+                </ul>
+                </div>
+            </nav>
         )
     }
 }
